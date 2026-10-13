@@ -1,0 +1,82 @@
+﻿@page
+@model wt_lab8_8razor_postgresql_krutalevich.Pages.Flights.DetailsModel
+
+@{
+    ViewData["Title"] = "Рейс " + Model.Flight?.FlightNumber;
+}
+
+<div class="container py-4">
+
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a asp-page="/Flights/Index">Рейсы</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                @Model.Flight?.FlightNumber
+            </li>
+        </ol>
+    </nav>
+
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <div class="card shadow rounded-4">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0 fs-4">Рейс @Model.Flight?.FlightNumber</h2>
+                </div>
+                <div class="card-body">
+
+                    <dl class="row mb-0">
+                        <dt class="col-sm-5">ID</dt>
+                        <dd class="col-sm-7">@Model.Flight?.Id</dd>
+
+                        <dt class="col-sm-5">Номер рейса</dt>
+                        <dd class="col-sm-7">@Model.Flight?.FlightNumber</dd>
+
+                        <dt class="col-sm-5">Город вылета</dt>
+                        <dd class="col-sm-7">@Model.Flight?.Departure</dd>
+
+                        <dt class="col-sm-5">Город прилёта</dt>
+                        <dd class="col-sm-7">@Model.Flight?.Arrival</dd>
+
+                        <dt class="col-sm-5">Цена</dt>
+                        <dd class="col-sm-7">
+                            <span class="fs-4 fw-bold text-primary">
+                                @Model.Flight?.Price.ToString("F2") руб.
+                            </span>
+                        </dd>
+
+                        <dt class="col-sm-5">Статус</dt>
+                        <dd class="col-sm-7">
+                            @if (Model.Flight?.IsAvailable == true)
+                            {
+                                <span class="badge bg-success">Доступен</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger">Нет мест</span>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+                <div class="card-footer bg-white d-flex justify-content-between">
+                    <a asp-page="/Flights/Index" class="btn btn-secondary">
+                        ← Назад к списку
+                    </a>
+                    <div>
+                        <a asp-page="/Flights/Edit"
+                           asp-route-id="@Model.Flight?.Id"
+                           class="btn btn-outline-warning">
+                            Редактировать
+                        </a>
+                        <a asp-page="/Flights/Delete"
+                           asp-route-id="@Model.Flight?.Id"
+                           class="btn btn-outline-danger">
+                            Удалить
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
