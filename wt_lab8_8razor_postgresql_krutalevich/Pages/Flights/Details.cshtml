@@ -46,6 +46,9 @@
                             </span>
                         </dd>
 
+                        <dt class="col-sm-5">Описание</dt>
+                        <dd class="col-sm-7">@Model.Flight?.Description</dd>
+
                         <dt class="col-sm-5">Статус</dt>
                         <dd class="col-sm-7">
                             @if (Model.Flight?.IsAvailable == true)

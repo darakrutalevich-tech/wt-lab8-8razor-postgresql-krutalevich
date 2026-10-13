@@ -24,4 +24,7 @@ public class Flight
 
     [Display(Name = "Доступен")]
     public bool IsAvailable { get; set; }
+
+    [Display(Name = "Описание")]
+    public string Description { get; set; } = "";
 }

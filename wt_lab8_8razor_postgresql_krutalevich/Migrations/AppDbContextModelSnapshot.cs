@@ -37,6 +37,10 @@ namespace wt_lab8_8razor_postgresql_krutalevich.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("FlightNumber")
                         .IsRequired()
                         .HasMaxLength(20)
