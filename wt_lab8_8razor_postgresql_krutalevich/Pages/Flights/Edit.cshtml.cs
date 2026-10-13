@@ -7,11 +7,19 @@ namespace wt_lab8_8razor_postgresql_krutalevich.Pages.Flights;
 
 public class EditModel : PageModel
 {
+    private readonly AppDbContext _context;
+
+    public EditModel(AppDbContext context)
+    {
+        _context = context;
+    }
+
     [BindProperty]
     public Flight Flight { get; set; } = new();
-    public IActionResult OnGet(int id)
+
+    public async Task<IActionResult> OnGetAsync(int id)
     {
-        var flight = FlightStore.Flights.FirstOrDefault(f => f.Id == id);
+        var flight = await _context.Flights.FindAsync(id);
         if (flight == null)
             return NotFound();
 
@@ -19,14 +27,12 @@ public class EditModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
-        {
             return Page();
-        }
 
-        var existing = FlightStore.Flights.FirstOrDefault(f => f.Id == Flight.Id);
+        var existing = await _context.Flights.FindAsync(Flight.Id);
         if (existing == null)
             return NotFound();
 
@@ -36,6 +42,7 @@ public class EditModel : PageModel
         existing.Price = Flight.Price;
         existing.IsAvailable = Flight.IsAvailable;
 
+        await _context.SaveChangesAsync();
         return RedirectToPage("./Index");
     }
 }

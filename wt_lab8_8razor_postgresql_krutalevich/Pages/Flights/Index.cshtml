@@ -25,6 +25,19 @@
     }
     else
     {
+        <form method="get" class="row g-2 mb-4">
+            <div class="col-12 col-md-8">
+                <input type="text"
+                       name="Search"
+                       value="@Model.Search"
+                       class="form-control"
+                       placeholder="Поиск по номеру рейса, городу вылета или прилёта" />
+            </div>
+            <div class="col-12 col-md-4 d-flex gap-2">
+                <button type="submit" class="btn btn-primary flex-grow-1">Найти</button>
+                <a asp-page="/Flights/Index" class="btn btn-outline-secondary">Сбросить</a>
+            </div>
+        </form>
         <p class="text-muted">Всего рейсов: @Model.Flights.Count</p>
 
         <div class="row g-4">

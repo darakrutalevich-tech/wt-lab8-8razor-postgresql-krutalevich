@@ -8,23 +8,28 @@ namespace wt_lab8_8razor_postgresql_krutalevich.Pages.Flights;
 
 public class CreateModel : PageModel
 {
+    private readonly AppDbContext _context;
+
+    public CreateModel(AppDbContext context)
+    {
+        _context = context;
+    }
+
     [BindProperty]
     public Flight Flight { get; set; } = new();
 
-    // GET: /Flights/Create
     public void OnGet()
     {
     }
 
-    // POST: /Flights/Create
-    public IActionResult OnPost()
+    public async Task<IActionResult> OnPostAsync()
     {
         if (!ModelState.IsValid)
-        {
             return Page();
-        }
-        Flight.Id = FlightStore.NextId();
-        FlightStore.Flights.Add(Flight);
+
+        _context.Flights.Add(Flight);
+        await _context.SaveChangesAsync();
+
         return RedirectToPage("./Index");
     }
 }
