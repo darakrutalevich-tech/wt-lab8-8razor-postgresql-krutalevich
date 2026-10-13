@@ -5,6 +5,23 @@ using wt_lab8_8razor_postgresql_krutalevich.Models;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+var databaseUrl = builder.Configuration["DATABASE_URL"];
+if (!string.IsNullOrWhiteSpace(databaseUrl))
+{
+    var uri = new Uri(databaseUrl);
+    var userInfo = uri.UserInfo.Split(':', 2);
+    var dbPort = uri.Port > 0 ? uri.Port : 5432;
+
+    connectionString =
+        $"Host={uri.Host};" +
+        $"Port={dbPort};" +
+        $"Database={uri.AbsolutePath.TrimStart('/')};" +
+        $"Username={Uri.UnescapeDataString(userInfo[0])};" +
+        $"Password={Uri.UnescapeDataString(userInfo[1])};" +
+        "SSL Mode=Require;Trust Server Certificate=true";
+}
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
@@ -37,6 +54,6 @@ app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
 
-//var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
-//app.Run($"http://0.0.0.0:{port}");
-app.Run();
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+app.Run($"http://0.0.0.0:{port}");
+//app.Run();
