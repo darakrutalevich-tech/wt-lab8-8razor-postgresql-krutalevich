@@ -15,4 +15,4 @@ COPY --from=build /app/publish .
 ENV ASPNETCORE_URLS=http://0.0.0.0:10000
 EXPOSE 10000
 
-ENTRYPOINT ["dotnet", "wt-lab8-8razor-postgresql-krutalevich.dll"]
+ENTRYPOINT ["dotnet", "wt_lab8_8razor_postgresql_krutalevich.dll"]
